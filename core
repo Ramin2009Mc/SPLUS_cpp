@@ -1,0 +1,103 @@
+#include <iostream>
+#include <string>
+#include <ctime>
+#include <windows.h>
+using namespace std;
+
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+
+string logic() {
+    srand(time(nullptr));
+    const int size = 33;
+    string answers[size] = {"Бесспорно", "Наверное нет", "Я хз", "Абсолютно точно да", "Возможно", "Скорее да чем нет", "Скорее нет чем да", "Подумай", "Очень может быть", "Я позвонил Байдону он сказал да", "Позвонил Жаку Фреско, он не знает, но я почти уверен что нет", "Мой старший брат Советчик++ сказал что у тебя депрессия, я же думаю что ответ 'Может быть'", "Я сделаю вид будто я не видел этот вопрос", "Почти да", "Почти нет", "Ответ не нет", "Не да", "Мне кажется - да", "Пока неясно, попробуй снова", "Даже не думай", "Предрешено", "Вероятнее всего", "Спроси позже", "Мой ответ - нет", "Никаких сомнений", "Хорошие перспективы", "Лучше не рассказывать", "По моим данным - нет","Можешь быть уверен в этом", "Сконцентрируйся и спроси опять", "Весьма сомнительно" };
+    string answer = answers[rand() % size];
+    return answer;
+}
+
+string final(string choice) {
+    string sl = "empt";
+    srand(time(nullptr));
+    bool run = true;
+    string bye[] = { "Прощай подаван", "Советник пошел спать", "Пока(было скучно)", "Программа завершила работу", "Я все сказал" };
+    while (run) {
+        if (choice == "0") {
+            SetConsoleTextAttribute(hConsole, 6);
+            return ("\n", "|", bye[rand() % 5]);
+        }
+        else if (choice != "1") {
+            SetConsoleTextAttribute(hConsole, 4);
+            return  "\n===============\n| Fatal Error |\n===============";
+            SetConsoleTextAttribute(hConsole, 7);
+        }
+        else {
+            SetConsoleTextAttribute(hConsole, 0);
+            return sl;
+        }
+    }
+}
+
+
+int main() {
+    setlocale(LC_ALL, "ru");
+    srand(time(nullptr));
+    string choice;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, 7);
+    cout << "==============" << endl;
+    cout << "СОВЕТНИК ПЛЮС" << endl;
+    cout << "==============" << endl;
+    SetConsoleTextAttribute(hConsole, 7);
+    cout << "\n|Привет, меня зовут советник плюс, я программа созданная для того чтобы \n|давать ответы на ваши вопросы, сейчас графически покажу каким образом: \n";
+    SetConsoleTextAttribute(hConsole, 2);
+    cout << "\n______________________________________________________________\n";
+    SetConsoleTextAttribute(hConsole, 7);
+    cout << " Нет                                                       Да" << endl;
+    cout << "\nЕсть 2 совершенные границы характеров моих советов, это 'Нет' и 'Да', \nмои советы будут генерироваться из всего что лежит между ними, но ими быть они не могут, \nмои советы бесцены, они генерируются учитывая мой бесконечный жизненный опыт и интуицию, \nони очень краткие и минималистичные, либо положительные либо отрицательные, они \nпомогут эффективно принять любое решение.";
+
+    for (int i = 0; i < 6; i++) {
+        srand(time(nullptr));
+        string q = "";
+        SetConsoleTextAttribute(hConsole, 8);
+        cout << "\n\nТвой вопрос \n>> ";
+        SetConsoleTextAttribute(hConsole, 7);
+        cin >> q;
+        int time = 0;
+        string thinking[10] = { "Дай подумать", "Думаю", "Включаю мозг", "5 сек поразмыслю", "Хороший вопрос", "Подожди", "Мне нужно подумать", "Щас я посмотрю в учебнике истории 3099 года", "Вопрос на подумать", "Щас я всомню ответ" };
+        SetConsoleTextAttribute(hConsole, 3);
+        cout << "\n" << thinking[rand() % 10];
+        while (time < 10) {
+            Sleep(100);
+            cout << "." << flush;
+            Sleep(100);
+            cout << "." << flush;
+            Sleep(100);
+            cout << "." << flush;
+            Sleep(100);
+            cout << "\b\b\b   \b\b\b" << std::flush;
+            time++;
+        }
+        time = 0;
+        SetConsoleTextAttribute(hConsole, 5);
+        cout << "\nОтвет ==> " << logic();
+        SetConsoleTextAttribute(hConsole, 7);
+         
+        cout << "\n" << "\nХочешь задать еще вопрос или закончим (0 - закончим, 1 - продолжим)\n>> ";
+        cin >> choice;
+        string f =  final(choice);
+        if (choice == "0") {
+            cout << f;
+            SetConsoleTextAttribute(hConsole, 0);
+            exit(0);
+        }
+        else {
+            cout << f;
+        }
+        if (i == 5) {
+            cout << "\nМоему мозгу нужен отдых!" << endl;
+            cout << "\n- Советник Плюс вышел из чата";
+        }
+    }
+    return 0;
+}
+
